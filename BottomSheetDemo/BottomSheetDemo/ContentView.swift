@@ -21,7 +21,7 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .frame(width: Utils.screenWidth, height: Utils.screenHeight, alignment: .topLeading)
-        .safeAreaInset(edge: .top) {
+        .safeAreaInset(edge: .leading, alignment: .center){
             BottomSheetView(isOpen: .constant(false), maxHeight: Utils.screenHeight) {
                 List {
                     ForEach(1..<20){ i in

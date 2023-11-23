@@ -23,6 +23,34 @@ struct BottomSheetView<Content: View>: View {
     }
 
     var body: some View {
+        if #available(iOS 16.4, *){
+            ZStack{}
+                .sheet(isPresented: .constant(true)) {
+                    content
+                        .padding(.top, 16)
+                        .presentationDetents([.height(Utils.screenHeight * 0.3), .medium, .large])
+                        .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                        .presentationCornerRadius(12)
+                        .interactiveDismissDisabled()
+                }
+        }else if #available(iOS 16.0, *){
+            ZStack{}
+                .sheet(isPresented: .constant(true)) {
+                    content
+                        .padding(.top, 16)
+                        .presentationDetents([.height(Utils.screenHeight * 0.3), .medium, .large])
+                        .interactiveDismissDisabled()
+                }
+        } else {
+            ZStack{}
+                .safeAreaInset(edge: .top) {
+                    customBottomSheet()
+                }
+        }
+    }
+
+    @ViewBuilder
+    func customBottomSheet() -> some View {
         GeometryReader{ geometry in
             VStack(spacing: 16) {
                 RoundedRectangle(cornerRadius: 25.0, style: /*@START_MENU_TOKEN@*/.continuous/*@END_MENU_TOKEN@*/)
